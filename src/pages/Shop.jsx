@@ -19,6 +19,7 @@ export default function Shop({ handleAdd }) {
 
         loadData();
     }, []);
+    console.log(products[1]);
     if (loading) return <p>Loading...</p>;
 
     if (error) return <p>{error}</p>;

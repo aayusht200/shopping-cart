@@ -15,9 +15,9 @@ function App() {
         updateCart(cartData);
     }
     return (
-        <div className="app text-5xl">
-            <Shop handleAdd={handleAdd} />
+        <div className="app p-10">
             <Navbar />
+            <Shop handleAdd={handleAdd} />
         </div>
     );
 }
