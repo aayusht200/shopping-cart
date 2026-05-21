@@ -14,7 +14,7 @@ export default function Navbar({ data }) {
                     Home
                 </Link>
                 <Link to="/shop" className="nav-link">
-                    Products
+                    Shop
                 </Link>
                 <Link to="/cart" className="nav-link cart">
                     Cart <span className="cart-count">{cartCount}</span>

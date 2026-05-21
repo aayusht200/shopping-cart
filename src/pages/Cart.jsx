@@ -24,7 +24,7 @@ export default function Cart({ cart, handleAdd, handleRemove, updateTotal, total
                 ))}
             </div>
             <div className="checkout">
-                <div className="total">{total.toFixed(2)}</div>
+                Total: <div className="total">${total.toFixed(2)}</div>
             </div>
         </div>
     );

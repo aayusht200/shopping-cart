@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Shop from './pages/Shop';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
-import { BrowserRouter, createBrowserRouter, Routes, Route } from 'react-router';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NotFound from './pages/NotFound';
 function App() {
     const [cart, updateCart] = useState(new Map());
@@ -21,7 +21,7 @@ function App() {
             cartData.set(id, { name, qty: 1, price, image });
         }
         updateCart(cartData);
-        updateSubTotal(total + price);
+        updateSubTotal((prev) => prev + price);
     }
     function handleRemove(id, price) {
         const cartData = new Map(cart);
@@ -35,7 +35,7 @@ function App() {
             cartData.delete(id);
         }
         updateCart(cartData);
-        updateSubTotal(total - currData.price);
+        updateSubTotal((prev) => prev - currData.price);
     }
     return (
         <BrowserRouter>
@@ -44,7 +44,6 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/shop" element={<Shop handleAdd={handleAdd} />} />
-
                     <Route
                         path="/cart"
                         element={<Cart cart={cart} handleAdd={handleAdd} handleRemove={handleRemove} total={total} />}

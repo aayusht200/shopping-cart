@@ -1,11 +1,18 @@
 @import 'tailwindcss';
-/* #region Root Variables */
+
+/* ========================================
+   ROOT VARIABLES
+======================================== */
+
 :root {
     /* 🎨 COLORS */
     --bg-card: hsl(208, 55%, 50%);
     --bg-card-overlay: hsl(from var(--bg-card) h s l / 0.2);
     --scroll-btn-bg: hsl(from var(--bg-card) h s l / 0.5);
+
+    /* 🌑 SHADOWS */
     --box-shadow-carousel: 11px 8px 0px 0px hsl(from var(--bg-card) h s l / 0.3);
+    --box-shadow-button: 6px 4px 0px 0px hsl(from var(--bg-card) h s l / 0.3);
 
     /* 📐 LAYOUT */
     --body-height: 100dvh;
@@ -25,7 +32,7 @@
     --heading-size: x-large;
     --heading-size-mobile: large;
 
-    /* 🧱 BORDER */
+    /* 🧱 BORDERS */
     --border-main: 1px solid rgb(119, 119, 119);
     --border-light: 0.3px solid;
 
@@ -35,14 +42,20 @@
     --scroll-btn-max: 52px;
     --scroll-btn-font: 1rem;
     --scroll-btn-margin: -0.5rem 0.5rem 0.5rem 0.5rem;
-    --box-shadow-button: 6px 4px 0px 0px hsl(from var(--bg-card) h s l / 0.3);
 
     /* 🧭 GRID */
     --grid-rows: 1fr auto;
     --grid-columns: auto 1fr auto;
+
+    /* 📦 COMMON SIZES */
+    --product-btn-height: clamp(40px, 50px, 60px);
+    --qty-btn-width: clamp(20px, 40px, 60px);
 }
-/* #endregion */
-/*#region Global Styling */
+
+/* ========================================
+   GLOBAL
+======================================== */
+
 .app {
     color: var(--bg-card);
     text-align: center;
@@ -50,10 +63,12 @@
     max-height: 100dvh;
     width: 100%;
     padding: var(--padding-main);
+    gap: var(--gap-main);
 }
 
-/* #endregion */
-/*#region Product Grid */
+/* ========================================
+   PRODUCT GRID
+======================================== */
 
 .product-grid {
     display: grid;
@@ -71,12 +86,9 @@
 .card {
     display: grid;
     grid-template-rows: auto 1fr;
-
     overflow: hidden;
-
     padding: var(--padding-main);
     gap: var(--gap-main);
-
     border: var(--border-main);
     box-shadow: var(--box-shadow-carousel);
 }
@@ -84,7 +96,6 @@
 .product-img {
     width: 100%;
     height: 250px;
-
     object-fit: contain;
     display: block;
 }
@@ -113,13 +124,9 @@
 
 .card .btn {
     font-weight: var(--font-weight-main);
-
     border: var(--border-main);
-
-    height: clamp(40px, 50px, 60px);
-
+    height: var(--product-btn-height);
     cursor: pointer;
-
     box-shadow: var(--box-shadow-button);
 }
 
@@ -128,8 +135,10 @@
     font-weight: 800;
 }
 
-/* #endregion */
-/*#region Home Page */
+/* ========================================
+   HOME PAGE
+======================================== */
+
 .home {
     display: flex;
     flex-direction: column;
@@ -153,6 +162,7 @@
     width: var(--carousel-width);
     height: var(--carousel-height);
     box-shadow: var(--box-shadow-carousel);
+
     display: grid;
     grid-template-areas:
         'scroll scroll scroll'
@@ -162,13 +172,19 @@
     grid-template-columns: var(--grid-columns);
 
     gap: var(--gap-main);
+
     @media (min-width: 1300px) {
         width: 95%;
     }
+
     @media (min-width: 1400px) {
         width: 90%;
     }
 }
+
+/* ========================================
+   IMAGE CAROUSEL
+======================================== */
 
 .image-carousel {
     grid-area: scroll;
@@ -261,72 +277,90 @@
         scroll-snap-type: x mandatory;
     }
 }
-/* #endregion */
-/* #region Cart Page */
+
+/* ========================================
+   CART PAGE
+======================================== */
+
 .cart-details,
 .cart-header {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     justify-content: space-between;
     align-items: center;
-    /* border: 1px solid; */
     padding: 1rem;
 }
+
 .cart-details > div {
     justify-self: center;
     height: 100%;
 }
+
 .cart-details > img {
     justify-self: center;
     max-width: 80%;
 }
+
 .update-qty {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--gap-main);
 }
+
 .update-qty > button {
     cursor: pointer;
     border: 0.5px solid;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow-button);
-    width: clamp(20px, 40px, 60px);
+    width: var(--qty-btn-width);
 }
-.cart {
-    display: grid;
-}
-.checkout {
-    border: 1px solid;
-    place-items: end;
-    padding-right: 4rem;
-}
-/* #endregion */
 
-/* #region navbar */
+.checkout {
+    padding-right: 4rem;
+    display: flex;
+    justify-content: end;
+    gap: var(--gap-main);
+}
+
+.cart-header,
+.checkout {
+    border-bottom: 1px solid;
+    border-right: 1px solid;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-button);
+}
+
+/* ========================================
+   NAVBAR
+======================================== */
+
 .navbar {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
 }
+
 .nav-left {
     display: flex;
     align-items: center;
     justify-self: start;
     gap: var(--gap-main);
 }
+
 .nav-right {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: var(--gap-main);
 }
+
 .cart-count {
     padding: 0.2rem 0.9rem 0.2rem 0.8rem;
     border: var(--border-light);
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow-button);
 }
-/* #endregion */
+
 .nav-link {
     display: flex;
     border: var(--border-light);
@@ -335,7 +369,22 @@
     place-items: center;
     padding: 1rem;
     gap: var(--gap-main);
-    height: clamp(40px, 50px, 60px);
+    height: var(--product-btn-height);
     cursor: pointer;
     box-shadow: var(--box-shadow-button);
+}
+
+/* ========================================
+   ERROR PAGE
+======================================== */
+
+.error-div {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    gap: var(--gap-main);
+}
+
+.error-div .nav-link {
+    width: fit-content;
 }
