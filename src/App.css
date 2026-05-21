@@ -1,48 +1,252 @@
 @import 'tailwindcss';
+/* #region Root Variables */
+:root {
+    /* 🎨 COLORS */
+    --bg-card: hsl(208, 55%, 50%);
+    --bg-card-overlay: hsl(from var(--bg-card) h s l / 0.2);
+    --scroll-btn-bg: hsl(from var(--bg-card) h s l / 0.5);
+    --box-shadow-carousel: 11px 8px 0px 0px hsl(from var(--bg-card) h s l / 0.3);
+
+    /* 📐 LAYOUT */
+    --body-height: 90dvh;
+    --body-width: 90dvw;
+    --carousel-width: 100%;
+    --carousel-height: 80dvh;
+
+    /* 📏 SPACING */
+    --gap-main: 1rem;
+    --padding-main: 1rem;
+    --border-radius: 1rem;
+
+    /* 🔤 TYPOGRAPHY */
+    --font-size-main: clamp(0.78rem, 1.2vw, 0.95rem);
+    --font-weight-main: 600;
+    --line-height-main: 1.15;
+    --heading-size: x-large;
+    --heading-size-mobile: large;
+
+    /* 🧱 BORDER */
+    --border-main: 1px solid rgb(119, 119, 119);
+    --border-light: 0.3px solid;
+
+    /* ⏺️ SCROLL BUTTON */
+    --scroll-btn-min: 32px;
+    --scroll-btn-ideal: 42px;
+    --scroll-btn-max: 52px;
+    --scroll-btn-font: 1rem;
+    --scroll-btn-margin: -0.5rem 0.5rem 0.5rem 0.5rem;
+
+    /* 🧭 GRID */
+    --grid-rows: 1fr auto;
+    --grid-columns: auto 1fr auto;
+}
+/* #endregion */
+/*#region Global Styling */
+.app {
+    color: var(--bg-card);
+}
+/* #endregion */
+/*#region Product Grid */
 .product-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, minmax(0, 1fr));
     min-height: 0;
     height: 100%;
-    gap: 1rem;
+    gap: var(--gap-main);
 }
+
+.image-container,
+.card,
+.card .btn {
+    border: var(--border-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-carousel);
+}
+
 .card {
     display: grid;
     grid-template-rows: 1fr 30%;
     min-height: 0;
     overflow: hidden;
-    padding: 1rem;
-    border: 1px solid;
-    gap: 1rem;
+    padding: var(--padding-main);
+    border: var(--border-main);
+    gap: var(--gap-main);
 }
+
 .product-img {
     width: 100%;
-    min-height: 0;
     height: 100%;
+    min-height: 0;
     object-fit: contain;
     display: block;
 }
 
 .product-title,
 .product-category,
+.product-price,
+.card .btn {
+    font-size: var(--font-size-main);
+    line-height: var(--line-height-main);
+}
+
+.product-title,
+.product-category,
 .product-price {
     text-align: center;
-    font-size: clamp(0.78rem, 1.2vw, 0.95rem);
     font-weight: 500;
-    line-height: 1.15;
+    overflow: hidden;
 }
+
 .product-info {
     display: grid;
     grid-template-rows: repeat(auto-fit, 1fr);
-    gap: clamp(0.78rem, 1.2vw, 0.95rem);
+    gap: var(--font-size-main);
     align-items: center;
 }
 
 .card .btn {
-    font-size: clamp(0.78rem, 1.2vw, 0.95rem);
-    font-weight: 600;
-    line-height: 1.15;
-    border: 1px solid;
+    font-weight: var(--font-weight-main);
+    border: var(--border-main);
     height: clamp(40px, 60px, 80px);
+    cursor: pointer;
 }
+
+.card .btn:hover {
+    transform: scale(1.01);
+    font-weight: 800;
+}
+/* #endregion */
+/*#region Home Page */
+.home {
+    height: var(--body-height);
+    width: var(--body-width);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-main);
+}
+
+.store-header {
+    padding: var(--padding-main);
+    font-weight: var(--font-weight-main);
+    line-height: var(--line-height-main);
+    font-size: var(--heading-size);
+
+    @media (max-width: 1100px) {
+        font-size: var(--heading-size-mobile);
+    }
+}
+
+.image-container {
+    width: 95%;
+    height: var(--carousel-height);
+
+    display: grid;
+    grid-template-areas:
+        'scroll scroll scroll'
+        'left markers right';
+
+    grid-template-rows: var(--grid-rows);
+    grid-template-columns: var(--grid-columns);
+
+    gap: var(--gap-main);
+
+    @media (max-width: 1400px) {
+        width: var(--carousel-width);
+    }
+}
+
+.image-carousel {
+    grid-area: scroll;
+
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+
+    overflow-x: auto;
+
+    scroll-snap-type: x mandatory;
+    scrollbar-color: var(--bg-card) var(--bg-card-overlay);
+    scrollbar-width: thin;
+    scroll-marker-group: after;
+
+    @media (prefers-reduced-motion: no-preference) {
+        scroll-behavior: smooth;
+    }
+
+    > img {
+        display: block;
+        min-width: 100%;
+        max-width: 100%;
+        min-height: 100%;
+        max-height: 100%;
+
+        border-radius: var(--border-radius);
+        scroll-snap-align: center;
+
+        &::scroll-marker {
+            content: ' ';
+            border: 1px solid var(--bg-card);
+            border-radius: 50%;
+            outline-offset: 4px;
+            -webkit-tap-highlight-color: transparent;
+            scroll-snap-align: center;
+        }
+
+        &::scroll-marker:is(:hover, :focus-visible) {
+            border-color: var(--bg-card);
+            background: var(--scroll-btn-bg);
+        }
+
+        &::scroll-marker:target-current {
+            background: var(--bg-card);
+            border-color: var(--bg-card);
+        }
+    }
+
+    &::scroll-button(*) {
+        width: clamp(var(--scroll-btn-min), var(--scroll-btn-ideal), var(--scroll-btn-max));
+        aspect-ratio: 1 / 1;
+
+        margin: var(--scroll-btn-margin);
+
+        border: var(--border-main);
+        border-radius: 100%;
+
+        font-size: var(--scroll-btn-font);
+        background-color: var(--scroll-btn-bg);
+
+        cursor: pointer;
+    }
+
+    &::scroll-button(right) {
+        content: '⮕' / 'Scroll Right';
+        grid-area: right;
+    }
+
+    &::scroll-button(left) {
+        content: '⬅' / 'Scroll Left';
+        grid-area: left;
+    }
+
+    &::scroll-marker-group {
+        grid-area: markers;
+
+        display: grid;
+        place-content: safe center;
+        grid: 30px / auto-flow 30px;
+
+        gap: var(--gap-main);
+        padding: var(--padding-main);
+        margin: var(--scroll-btn-margin);
+
+        overflow: auto;
+        overscroll-behavior-x: contain;
+
+        scrollbar-width: none;
+        scroll-snap-type: x mandatory;
+    }
+}
+/* #endregion */

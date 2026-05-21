@@ -5,7 +5,7 @@ export default function ProductCard({ product, onAddToCart }) {
             <div className="product-info">
                 <p className="product-title ">{product.title}</p>
                 <p className="product-category">{product.category[0].toUpperCase() + product.category.slice(1)}</p>
-                <p className="product-price">{product.price}</p>
+                <p className="product-price">${product.price}</p>
                 <button onClick={onAddToCart} className="btn">
                     Add To Cart
                 </button>
