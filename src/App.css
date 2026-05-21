@@ -6,7 +6,7 @@
 
 :root {
     /* 🎨 COLORS */
-    --bg-card: hsl(208, 55%, 50%);
+    --bg-card: hsl(250, 100%, 39%);
     --bg-card-overlay: hsl(from var(--bg-card) h s l / 0.2);
     --scroll-btn-bg: hsl(from var(--bg-card) h s l / 0.5);
 
