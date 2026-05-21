@@ -4,12 +4,12 @@ import Navbar from './components/Navbar';
 import Shop from './pages/Shop';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
-
+import { BrowserRouter, createBrowserRouter, Routes, Route } from 'react-router';
+import NotFound from './pages/NotFound';
 function App() {
     const [cart, updateCart] = useState(new Map());
     const [total, updateSubTotal] = useState(0);
     function handleAdd(id, name, price, image) {
-        console.log(price);
         const cartData = new Map(cart);
         const currData = cartData.get(id);
         if (cartData.has(id)) {
@@ -38,12 +38,21 @@ function App() {
         updateSubTotal(total - currData.price);
     }
     return (
-        <div className="app p-10">
-            {/* <Navbar />
-            <Home />*/}
-            <Shop handleAdd={handleAdd} />
-            <Cart cart={cart} handleAdd={handleAdd} handleRemove={handleRemove} total={total} />
-        </div>
+        <BrowserRouter>
+            <div className="app">
+                <Navbar data={cart} />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/shop" element={<Shop handleAdd={handleAdd} />} />
+
+                    <Route
+                        path="/cart"
+                        element={<Cart cart={cart} handleAdd={handleAdd} handleRemove={handleRemove} total={total} />}
+                    />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+            </div>
+        </BrowserRouter>
     );
 }
 
